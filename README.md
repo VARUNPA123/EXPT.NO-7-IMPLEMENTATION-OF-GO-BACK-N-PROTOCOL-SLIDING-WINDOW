@@ -2,7 +2,8 @@
 # AIM
 To write and execute a program for Go-Back-N protocol.
 # EQUIPMENTS REQUIRED
-Personal Computer Turbo C Compiler
+  1. Personal Computer
+  2. Turbo C Compiler
 # PROCEDURE
 1.	Connect two computers in Wired/Wireless LAN.
 2.	Make sure that two computers are in one network and could able to ping each other.
@@ -13,39 +14,48 @@ Personal Computer Turbo C Compiler
 7.	Choose the file and verify the go back protocol operation.
 
 # PROGRAM
-
+```
 #include <stdio.h>
-/* Assume 7 frames of data are to sent using GO BACK N ARQW*/ #define window_size 4
+#define WINDOW_SIZE 4   // Assume 7 frames of data are to be sent using GO-BACK-N ARQ
 void main()
 {
-int i,window_start = 1,ack; int n;
-printf("SLIDIDNG WINDOW PROTOCOL\n");
-char frame[n+1][10]; scanf("%d",&n);
-printf("GO BACK N ARQ\n"); printf("Enter the no of frames:%d\n",n); for(i=1;i<=n;i++)
-{
-printf("Content for frame %d :",i); scanf("%s",frame[i]);
+    int i, window_start = 1, ack, n;
+    char frame[20][10];   // Increased size to handle up to 20 frames safely
+    printf("SLIDING WINDOW PROTOCOL\n");
+    printf("Enter the number of frames: ");
+    scanf("%d", &n);
+    for (i = 1; i <= n; i++)
+    {
+        printf("Content for frame %d: ", i);
+        scanf("%s", frame[i]);
+    }
+    while (window_start <= n)
+    {
+        printf("\nSending frames: ");
+        for (i = window_start; i < window_start + WINDOW_SIZE && i <= n; i++)
+        {
+            printf("Frame %d ", i);
+        }
+        printf("\nEnter the frame number which no ACK (or 0 for all ACK): ");
+        scanf("%d", &ack);
+        if (ack == 0)
+        {
+            printf("\nAll frames acknowledged. Moving window forward.\n");
+            window_start += WINDOW_SIZE;
+        }
+        else
+        {
+            printf("\nNo acknowledgement for frame %d.\n", ack);
+            printf("Resending frames starting from frame %d:\n", ack);
+            window_start = ack;
+        }
+    }
+    printf("\nAll frames sent successfully.\n");
 }
-while(window_start<=n)
-{
-printf("\nSending frames:\n"); scanf("%d",&ack);
-printf("Enter frame number with no acks :%d",ack); if(ack == 0)
-{
-printf("Enter frame number with no ACK forward\n"); window_start += window_size;
- 
-}
-else
-{
-printf("No Acknowlegement for frame %d... \n",ack); printf("Resending frames starting from frame %d\n",ack); window_start = ack;
-}
-}
-printf("\n All frames sent successfully.\n");
-}
-
+```
 # OUTPUT
 
- 
+<img width="1475" height="750" alt="image" src="https://github.com/user-attachments/assets/eb819456-afaf-481f-8836-dd1470a70a0c" />
 
-
-
-
-# RESULT: Thus the Go-Back-N protocol-Sliding Window was implemented and the output is verified successfully.
+# RESULT
+Thus the Go-Back-N protocol-Sliding Window was implemented and the output is verified successfully.
